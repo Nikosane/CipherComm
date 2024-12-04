@@ -23,3 +23,10 @@ This repository contains a secure chat application with end-to-end encryption us
    ```bash
    python client/client.py
    ```
+## Dependencies
+- Python 3.8 or higher
+- cryptography
+
+## How It Works
+- The server and client exchange public keys during setup.
+- Messages are encrypted with the recipient's public key and decrypted with the recipient's private key.
