@@ -1,0 +1,1 @@
+cryptography>=39.0.0  # For RSA key generation, encryption, and decryption
