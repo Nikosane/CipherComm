@@ -1,7 +1,17 @@
+import sys
+import os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+from utils.secure_chat import SecureChat  
+print("Secure Chat Server is running...")
+
 import socket
 from utils.secure_chat import SecureChat
 from utils.rsa_keys import RSAKeys
-
+from cryptography.hazmat.primitives import serialization 
 
 HOST = '127.0.0.1'
 PORT = 65432
@@ -20,7 +30,13 @@ def main():
         with conn:
             print(f"[INFO] Connected by {addr}")
 
-            conn.send(public_key.public_bytes().decode('utf-8').encode())
+            conn.send(
+                public_key.public_bytes(
+                    encoding=serialization.Encoding.PEM,
+                    format=serialization.PublicFormat.SubjectPublicKeyInfo
+                )
+            )
+
             print("[INFO] Sent public key to client.")
 
             client_public_key_data = conn.recv(2048)
